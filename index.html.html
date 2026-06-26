@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kamolot Akademiya - Ishga qabul anketasi</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 500px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 15px;
+        }
+        .header h1 {
+            color: #1e293b;
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        .header p {
+            color: #64748b;
+            font-size: 14px;
+        }
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            flex: 1;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #334155;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            background-color: #f8fafc;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: #3b82f6;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .file-upload {
+            border: 2px dashed #94a3b8;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            background-color: #f1f5f9;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+        }
+        .file-upload:hover {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        .file-upload input[type="file"] {
+            display: none;
+        }
+        .file-upload span {
+            color: #475569;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .submit-btn {
+            width: 100%;
+            background-color: #2563eb;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        .submit-btn:hover {
+            background-color: #1d4ed8;
+        }
+        .optional-text {
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: normal;
+        }
+        
+        /* Telefon ekranlari uchun moslashuvchanlik */
+        @media (max-width: 480px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Anketa to'ldirish</h1>
+            <p>"Kamolot Akademiya" jamoasiga qo'shiling</p>
+        </div>
+
+        <form action="#" method="POST" enctype="multipart/form-data">
+            
+            <div class="form-group">
+                <label for="fullname">F.I.Sh</label>
+                <input type="text" id="fullname" name="fullname" placeholder="To'liq ism-sharifingiz" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="dob">Tug'ilgan sana</label>
+                    <input type="date" id="dob" name="dob" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Telefon raqam</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+998 90 123 45 67" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Yashash manzili</label>
+                <input type="text" id="address" name="address" placeholder="Tuman, ko'cha, uy" required>
+            </div>
+
+            <div class="form-group">
+                <label for="education">Qayerni bitirgansiz?</label>
+                <input type="text" id="education" name="education" placeholder="Oliy ta'lim muassasasi nomi" required>
+            </div>
+
+            <div class="form-group">
+                <label for="subject">Qaysi fan o'qituvchisi?</label>
+                <select id="subject" name="subject" required>
+                    <option value="" disabled selected>Ro'yxatdan tanlang...</option>
+                    <option value="boshlangich">Boshlang'ich ta'lim (Rus sinf)</option>
+                    <option value="fizika">Fizika</option>
+                    <option value="tarix">Tarix (Rus sinf)</option>
+                    <option value="matematika">Matematika (Rus sinf)</option>
+                    <option value="boshqa">Boshqa fan</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Sertifikat yuklash <span class="optional-text">(Ixtiyoriy)</span></label>
+                <label class="file-upload">
+                    <span>📷 Rasm yoki PDF fayl tanlang</span>
+                    <input type="file" name="certificate" accept="image/*,.pdf">
+                </label>
+            </div>
+
+            <button type="submit" class="submit-btn">Anketani yuborish</button>
+        </form>
+    </div>
+
+</body>
+</html>
