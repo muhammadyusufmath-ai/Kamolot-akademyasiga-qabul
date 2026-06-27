@@ -58,7 +58,11 @@
             font-weight: 600;
             font-size: 13px;
         }
-        .form-group input, .form-group select {
+        .form-group input[type="text"], 
+        .form-group input[type="date"], 
+        .form-group input[type="number"], 
+        .form-group input[type="tel"], 
+        .form-group select {
             width: 100%;
             padding: 10px 12px;
             border: 1px solid #cbd5e1;
@@ -72,6 +76,23 @@
             border-color: #3b82f6;
             background-color: #ffffff;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .form-group input:disabled {
+            background-color: #e2e8f0;
+            cursor: not-allowed;
+        }
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 5px;
+        }
+        .radio-group label {
+            font-weight: normal;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
         }
         .submit-btn {
             width: 100%;
@@ -88,6 +109,10 @@
         }
         .submit-btn:hover {
             background-color: #1d4ed8;
+        }
+        .submit-btn:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
         }
         @media (max-width: 480px) {
             .form-row {
@@ -141,12 +166,20 @@
 
             <div class="form-group">
                 <label for="address">Yashash manzili</label>
-                <input type="text" id="address" name="address" placeholder="Viloyat, tuman, MFY" required>
+                <input type="text" id="address" name="address" placeholder="Viloyat, tuman, ko'cha, uy" required>
             </div>
 
             <div class="form-group">
-                <label for="education">Bitirgan yoki o'qiydigan joyingiz (Agar talaba bo'lsangiz nechanchi kursligingizni yozing)</label>
-                <input type="text" id="education" name="education" placeholder="Masalan: Farg'ona DU, 3-kurs" required>
+                <label>Ta'lim holatingiz</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="edu_status" value="Bitirgan" required onchange="updateEduLabel()"> Oliy ma'lumotli (Bitirgan)</label>
+                    <label><input type="radio" name="edu_status" value="O'qiyapti" required onchange="updateEduLabel()"> Talaba (O'qiyapman)</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label id="edu_label" for="education">O'qish joyi</label>
+                <input type="text" id="education" name="education" placeholder="Tepadagi ta'lim holatini tanlang" required disabled>
             </div>
 
             <div class="form-group">
@@ -176,20 +209,37 @@
                 </select>
             </div>
 
-            <button type="submit" class="submit-btn">Anketani yuborish</button>
+            <button type="submit" id="submitBtn" class="submit-btn">Anketani yuborish</button>
         </form>
     </div>
 
     <script>
-      // Telefon raqamni formatlash funksiyasi (+998 XX XXX XX XX)
+      // ❗️ MANA SHU QISM SIZ AYTGANDAK O'ZGARTIRILDI ❗️
+      function updateEduLabel() {
+          const status = document.querySelector('input[name="edu_status"]:checked').value;
+          const eduInput = document.getElementById('education');
+          const eduLabel = document.getElementById('edu_label');
+          
+          eduInput.disabled = false;
+          
+          if(status === 'Bitirgan') {
+              eduLabel.innerText = "Qayerda va qaysi yo'nalishni bitirgansiz?";
+              eduInput.placeholder = "Masalan: Farg'ona DU, Matematika yo'nalishi";
+          } else {
+              eduLabel.innerText = "Qayerda, qaysi yo'nalishda va nechanchi kursda o'qiysiz?";
+              eduInput.placeholder = "Masalan: Farg'ona DU, Matematika yo'nalishi, 3-kurs";
+          }
+      }
+
+      // Telefon raqamni formatlash funksiyasi
       function formatPhoneNumber(e) {
           let input = e.target;
-          let val = input.value.replace(/\D/g, ''); // Faqat raqamlarni olib qoladi
+          let val = input.value.replace(/\D/g, ''); 
           
           if (!val.startsWith('998')) {
               val = '998' + val;
           }
-          val = val.substring(0, 12); // Maksimal uzunlikni cheklaydi
+          val = val.substring(0, 12); 
           
           let formatted = '+';
           if (val.length > 0) formatted += val.substring(0, 3);
@@ -201,39 +251,52 @@
           input.value = formatted;
       }
 
-      // Formatlashni ikkala telefon maydoniga qo'shish
       const phoneInput = document.getElementById('phone');
       const phone2Input = document.getElementById('phone2');
       
       phoneInput.addEventListener('input', formatPhoneNumber);
       phone2Input.addEventListener('input', formatPhoneNumber);
       
-      // Fokuslanganda boshlang'ich qiymat o'rnatish
       phoneInput.addEventListener('focus', () => { if(phoneInput.value === '') phoneInput.value = '+998 '; });
       phone2Input.addEventListener('focus', () => { if(phone2Input.value === '') phone2Input.value = '+998 '; });
 
       // Ma'lumotni Google Sheets'ga yuborish
       const scriptURL = 'https://script.google.com/macros/s/AKfycbzXyQNFpqlJT11ay9JvvjlANL70FhmMt7eufaE68MT_GG6A2d9jN4h8RaIA6C4OV66s/exec';
       const form = document.forms['submit-to-google-sheet'];
+      const submitBtn = document.getElementById('submitBtn');
 
       form.addEventListener('submit', e => {
         e.preventDefault();
         
+        submitBtn.innerText = 'Yuborilmoqda... ⏳';
+        submitBtn.disabled = true;
+
         let formData = new FormData(form);
         
-        // Sanani Kun.Oy.Yil formatiga o'tkazish
         let dobRaw = formData.get('dob');
         if(dobRaw) {
             let parts = dobRaw.split('-');
-            formData.set('dob', `${parts[2]}.${parts[1]}.${parts[0]}`); // DD.MM.YYYY
+            formData.set('dob', `${parts[2]}.${parts[1]}.${parts[0]}`); 
         }
         
         fetch(scriptURL, { method: 'POST', body: formData})
           .then(response => {
             alert("Sizning so'rovingiz muvaffaqiyatli qabul qilindi. Yaqin orada siz bilan bog'lanamiz! Tashakkur.");
             form.reset(); 
+            
+            submitBtn.innerText = 'Anketani yuborish';
+            submitBtn.disabled = false;
+            
+            document.getElementById('education').disabled = true;
+            document.getElementById('education').placeholder = "Tepadagi ta'lim holatini tanlang";
+            document.getElementById('edu_label').innerText = "O'qish joyi";
           })
-          .catch(error => console.error('Xatolik!', error.message));
+          .catch(error => {
+            console.error('Xatolik!', error.message);
+            alert("Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.");
+            submitBtn.innerText = 'Anketani yuborish';
+            submitBtn.disabled = false;
+          });
       });
     </script>
 </body>
