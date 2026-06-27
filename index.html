@@ -134,7 +134,7 @@
             <p>"Kamolot Akademiya" jamoasiga qo'shiling</p>
         </div>
 
-        <form action="#" method="POST" enctype="multipart/form-data">
+        <form name="submit-to-google-sheet" method="POST" enctype="multipart/form-data">
             
             <div class="form-group">
                 <label for="fullname">F.I.Sh</label>
@@ -186,5 +186,20 @@
         </form>
     </div>
 
+    <script>
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbzXyQNFpqlJT11ay9JvvjlANL70FhmMt7eufaE68MT_GG6A2d9jN4h8RaIA6C4OV66s/exec';
+      const form = document.forms['submit-to-google-sheet'];
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+          .then(response => {
+            alert('Ma\'lumot muvaffaqiyatli yuborildi! Rahmat.');
+            form.reset(); 
+          })
+          .catch(error => console.error('Xatolik!', error.message));
+      });
+    </script>
 </body>
 </html>
