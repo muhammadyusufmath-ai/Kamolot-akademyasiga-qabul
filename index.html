@@ -3,350 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kamolot Akademiyasi - Ishga qabul anketasi</title>
+    <title>Kamolot Akademiyasi - Qabul Arizasi</title>
     <style>
-        :root {
-            --kamolot-blue: #12385A; /* Logodagi to'q ko'k rang */
-            --kamolot-green: #219E45; /* Logodagi yashil rang */
-            --bg-outer: #e8edf2; /* Ikkala yondagi ochiqroq fon (oppoq emas) */
-            --bg-inner: #d0dae5; /* Anketa turadigan to'qroq fon */
-        }
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
         body {
-            background-color: var(--bg-outer);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
             display: flex;
             justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
         }
-        .container {
-            background-color: var(--bg-inner);
-            padding: 35px 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(18, 56, 90, 0.15);
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 500px;
             width: 100%;
-            max-width: 550px;
         }
-        .header {
+        .form-header {
             text-align: center;
             margin-bottom: 25px;
-            border-bottom: 2px solid #b8c8d8;
-            padding-bottom: 15px;
         }
-        .header h1 {
-            color: var(--kamolot-blue);
-            font-size: 24px;
-            margin-bottom: 5px;
-            font-weight: 800;
+        .form-header h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
         }
-        .header p {
-            color: #4a627a;
+        .form-header p {
+            color: #7f8c8d;
             font-size: 14px;
-            font-weight: 500;
-        }
-        .form-row {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
+            line-height: 1.5;
         }
         .form-group {
             margin-bottom: 15px;
-            flex: 1;
         }
-        .form-group label {
+        label {
             display: block;
-            margin-bottom: 6px;
-            color: var(--kamolot-blue);
-            font-weight: 700;
-            font-size: 13px;
+            margin-bottom: 5px;
+            color: #34495e;
+            font-weight: 500;
         }
-        .form-group input[type="text"], 
-        .form-group input[type="date"], 
-        .form-group input[type="number"], 
-        .form-group input[type="tel"], 
-        .form-group select {
+        input {
             width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #aebfd0;
-            border-radius: 8px;
-            font-size: 14px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+        input:focus {
+            border-color: #3498db;
             outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
-            background-color: #f8fafc;
-            color: #1e293b;
         }
-        .form-group input:focus, .form-group select:focus {
-            border-color: var(--kamolot-green);
-            background-color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(33, 158, 69, 0.2);
-        }
-        .form-group input:disabled {
-            background-color: #cdd6df;
-            color: #64748b;
-            cursor: not-allowed;
-        }
-        .radio-group {
-            display: flex;
-            gap: 15px;
-            margin-top: 5px;
-        }
-        .radio-group label {
-            font-weight: 600;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            color: var(--kamolot-blue);
-        }
-        #course_group {
-            display: none;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .submit-btn {
+        button {
             width: 100%;
-            background-color: var(--kamolot-green);
+            padding: 12px;
+            background-color: #3498db;
             color: white;
-            padding: 14px;
             border: none;
-            border-radius: 8px;
+            border-radius: 5px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background 0.3s;
             margin-top: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
-        .submit-btn:hover {
-            background-color: var(--kamolot-blue);
-            box-shadow: 0 4px 12px rgba(18, 56, 90, 0.25);
+        button:hover {
+            background-color: #2980b9;
         }
-        .submit-btn:disabled {
-            background-color: #8fa0b3;
+        button:disabled {
+            background-color: #95a5a6;
             cursor: not-allowed;
-            box-shadow: none;
-        }
-        @media (max-width: 480px) {
-            .form-row {
-                flex-direction: column;
-                gap: 0;
-            }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="header">
-            <h1>KAMOLOT AKADEMIYASI</h1>
-            <p>Ishga qabul arizasini to'ldiring</p>
+    <div class="form-container">
+        <div class="form-header">
+            <h2>Kamolot akademiyasi oilasiga xush kelibsiz!</h2>
+            <p>Ta'limda o'z izini qoldirishni istaganlar safidan joy olish uchun quyidagi qabul arizasini to'ldiring.</p>
         </div>
 
-        <form name="submit-to-google-sheet" method="POST">
-            
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="firstname">Ism</label>
-                    <input type="text" id="firstname" name="firstname" placeholder="Ismingiz" required>
-                </div>
-                <div class="form-group">
-                    <label for="lastname">Familiya</label>
-                    <input type="text" id="lastname" name="lastname" placeholder="Familiyangiz" required>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="dob">Tug'ilgan sana (kun, oy, yil bo'yicha)</label>
-                    <input type="date" id="dob" name="dob" required>
-                </div>
-                <div class="form-group">
-                    <label for="experience">Tajribangiz (yil)</label>
-                    <input type="number" id="experience" name="experience" placeholder="0" min="0" step="1" required>
-                </div>
+        <form id="applicationForm">
+            <div class="form-group">
+                <label for="fullName">F.I.SH.</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Ism va Familiya" required>
             </div>
 
             <div class="form-group">
-                <label for="phone">Telefon raqam</label>
-                <input type="tel" id="phone" name="phone" inputmode="numeric" placeholder="+998" required>
+                <label for="dob">Tug'ilgan sana</label>
+                <input type="date" id="dob" name="dob" required>
             </div>
 
             <div class="form-group">
-                <label for="phone2">Qo'shimcha telefon raqam</label>
-                <input type="tel" id="phone2" name="phone2" inputmode="numeric" placeholder="+998">
+                <label for="phone">Telefon raqami</label>
+                <input type="tel" id="phone" name="phone" placeholder="+998901234567" required>
             </div>
 
             <div class="form-group">
                 <label for="address">Yashash manzili</label>
-                <input type="text" id="address" name="address" placeholder="Viloyat, tuman, MFY" required>
+                <input type="text" id="address" name="address" placeholder="Viloyat, tuman, manzil, mfy" required>
             </div>
 
             <div class="form-group">
-                <label>Ta'lim holatingiz</label>
-                <div class="radio-group">
-                    <label><input type="radio" name="edu_status" value="Bitirgan" required onchange="updateEduLabel()"> Oliy ma'lumotli (Bitirgan)</label>
-                    <label><input type="radio" name="edu_status" value="O'qiyapti" required onchange="updateEduLabel()"> Talaba (O'qiyapman)</label>
-                </div>
+                <label for="experience">Tajriba yili</label>
+                <input type="number" id="experience" name="experience" inputmode="numeric" pattern="[0-9]*" min="0" placeholder="Masalan: 2" required>
             </div>
 
-            <div class="form-group">
-                <label id="edu_label" for="education">O'qish yoki bitirgan joyingiz</label>
-                <input type="text" id="education" name="education" placeholder="Tepadagi ta'lim holatini tanlang" required disabled>
-            </div>
-
-            <div class="form-group" id="course_group">
-                <label for="course">Nechanchi kurssiz? (Magistratura bo'lsa ham yozing)</label>
-                <input type="text" id="course" name="course" placeholder="Masalan: 1, 2, 3, 4 yoki magistratura">
-            </div>
-
-            <div class="form-group">
-                <label for="subject">Qaysi vakansiya bo'yicha arizangizni topshiryapsiz?</label>
-                <select id="subject" name="subject" required>
-                    <option value="" disabled selected>Vakansiyani tanlang...</option>
-                    <option value="Boshlang'ich (Rus)">Boshlang'ich ta'lim (1-4 rus sinfi uchun)</option>
-                    <option value="Matematika (Rus)">Matematika (Rus sinfi uchun)</option>
-                    <option value="Tarix (Rus)">Tarix (Rus sinfi uchun)</option>
-                    <option value="Fizika">Fizika</option>
-                    <option value="Kimyo">Kimyo</option>
-                    <option value="Biologiya">Biologiya</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label for="cert_level">Sertifikat darajangizni tanlang</label>
-                <select id="cert_level" name="cert_level" required>
-                    <option value="" disabled selected>Darajani tanlang...</option>
-                    <option value="A+">A+</option>
-                    <option value="A">A</option>
-                    <option value="B+">B+</option>
-                    <option value="B">B</option>
-                    <option value="C+">C+</option>
-                    <option value="C">C</option>
-                    <option value="Mavjud emas">Mavjud emas</option>
-                </select>
-            </div>
-
-            <button type="submit" id="submitBtn" class="submit-btn">Anketani yuborish</button>
+            <button type="submit" id="submitBtn">Arizani yuborish</button>
         </form>
     </div>
 
     <script>
-      // ❗️ O'ZBEKCHA BILDIRISHNOMA (Validation) UCHUN KOD ❗️
-      document.addEventListener("DOMContentLoaded", function() {
-          const requiredElements = document.querySelectorAll('[required]');
-          
-          requiredElements.forEach(el => {
-              // Bo'sh qolganda chiqadigan xabar
-              el.addEventListener('invalid', function(e) {
-                  e.preventDefault(); // Brauzerni o'ziniki chiqmasligi uchun
-                  this.setCustomValidity("Ushbu qatorni to'ldirish majburiy. Iltimos, ma'lumotni kiriting!");
-                  this.reportValidity();
-              });
-              
-              // Odam yoza boshlaganda xatoni tozalash
-              el.addEventListener('input', function() {
-                  this.setCustomValidity('');
-              });
-          });
-      });
+        // Google Script manzilingiz
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzXyQNFpqlJT11ay9JvvjlANL70FhmMt7eufaE68MT_GG6A2d9jN4h8RaIA6C4OV66s/exec';
+        const form = document.getElementById('applicationForm');
+        const btn = document.getElementById('submitBtn');
 
-      function updateEduLabel() {
-          const status = document.querySelector('input[name="edu_status"]:checked').value;
-          const eduInput = document.getElementById('education');
-          const eduLabel = document.getElementById('edu_label');
-          const courseGroup = document.getElementById('course_group');
-          const courseInput = document.getElementById('course');
-          
-          eduInput.disabled = false;
-          
-          if(status === 'Bitirgan') {
-              eduLabel.innerText = "Qayerni va qaysi yo'nalishni bitirgansiz?";
-              eduInput.placeholder = "Masalan: Farg'ona DU, Matematika yo'nalishi";
-              
-              courseGroup.style.display = 'none';
-              courseInput.removeAttribute('required');
-              courseInput.value = ''; 
-          } else {
-              eduLabel.innerText = "Qayerda va qaysi yo'nalishda o'qiyapsiz?";
-              eduInput.placeholder = "Masalan: Farg'ona DU, Matematika yo'nalishi";
-              
-              courseGroup.style.display = 'block';
-              courseInput.setAttribute('required', 'required');
-          }
-      }
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            
+            // Tugmani holatini o'zgartirish (Yuborilmoqda...)
+            btn.innerText = "Yuborilmoqda...";
+            btn.disabled = true;
 
-      function formatPhoneNumber(e) {
-          let input = e.target;
-          let val = input.value.replace(/\D/g, ''); 
-          if (!val.startsWith('998')) val = '998' + val;
-          val = val.substring(0, 12); 
-          let formatted = '+';
-          if (val.length > 0) formatted += val.substring(0, 3);
-          if (val.length > 3) formatted += ' ' + val.substring(3, 5);
-          if (val.length > 5) formatted += ' ' + val.substring(5, 8);
-          if (val.length > 8) formatted += ' ' + val.substring(8, 10);
-          if (val.length > 10) formatted += ' ' + val.substring(10, 12);
-          input.value = formatted;
-      }
+            // 1. Tug'ilgan sanani tartibga keltirish (Kun.Oy.Yil)
+            let dobInput = document.getElementById('dob').value;
+            let formattedDob = "";
+            if (dobInput) {
+                let dateParts = dobInput.split('-'); 
+                formattedDob = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`; 
+            }
 
-      const phoneInput = document.getElementById('phone');
-      const phone2Input = document.getElementById('phone2');
-      phoneInput.addEventListener('input', formatPhoneNumber);
-      phone2Input.addEventListener('input', formatPhoneNumber);
-      phoneInput.addEventListener('focus', () => { if(phoneInput.value === '') phoneInput.value = '+998 '; });
-      phone2Input.addEventListener('focus', () => { if(phone2Input.value === '') phone2Input.value = '+998 '; });
+            // 2. Telefon raqami formulasini oldini olish (Apostrof)
+            let phoneInput = document.getElementById('phone').value;
+            let safePhone = "'" + phoneInput; 
 
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbzXyQNFpqlJT11ay9JvvjlANL70FhmMt7eufaE68MT_GG6A2d9jN4h8RaIA6C4OV66s/exec';
-      const form = document.forms['submit-to-google-sheet'];
-      const submitBtn = document.getElementById('submitBtn');
+            // 3. Ma'lumotlarni obyektga yig'ish
+            let formData = {
+                fish: document.getElementById('fullName').value,
+                tugilgan_sana: formattedDob,
+                telefon: safePhone,
+                manzil: document.getElementById('address').value,
+                tajriba: document.getElementById('experience').value
+            };
 
-      form.addEventListener('submit', e => {
-        e.preventDefault();
-        
-        // Hamma required larni tekshirib o'tish
-        if (!form.checkValidity()) {
-            return;
-        }
-        
-        submitBtn.innerText = 'Yuborilmoqda... ⏳';
-        submitBtn.disabled = true;
-
-        let formData = new FormData(form);
-        let dobRaw = formData.get('dob');
-        if(dobRaw) {
-            let parts = dobRaw.split('-');
-            formData.set('dob', `${parts[2]}.${parts[1]}.${parts[0]}`); 
-        }
-        
-        fetch(scriptURL, { method: 'POST', body: formData})
-          .then(response => {
-            alert("Sizning so'rovingiz muvaffaqiyatli qabul qilindi. Yaqin orada siz bilan bog'lanamiz! Tashakkur.");
-            form.reset(); 
-            submitBtn.innerText = 'Anketani yuborish';
-            submitBtn.disabled = false;
-            document.getElementById('education').disabled = true;
-            document.getElementById('education').placeholder = "Tepadagi ta'lim holatini tanlang";
-            document.getElementById('edu_label').innerText = "O'qish joyi";
-            document.getElementById('course_group').style.display = 'none';
-          })
-          .catch(error => {
-            console.error('Xatolik!', error.message);
-            alert("Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.");
-            submitBtn.innerText = 'Anketani yuborish';
-            submitBtn.disabled = false;
-          });
-      });
+            // 4. Ma'lumotlarni Google Sheets'ga yuborish
+            fetch(scriptURL, {
+                method: 'POST',
+                // Google Sheets JSON formatni to'g'ri qabul qilishi uchun:
+                headers: {
+                    'Content-Type': 'text/plain;charset=utf-8',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                alert("Arizangiz muvaffaqiyatli yuborildi. Kamolot akademiyasi oilasiga xush kelibsiz!");
+                form.reset(); // Formani tozalash
+                btn.innerText = "Arizani yuborish"; // Tugmani asliga qaytarish
+                btn.disabled = false;
+            })
+            .catch(error => {
+                console.error('Xatolik:', error);
+                alert("Tarmoqda xatolik yuz berdi. Iltimos, birozdan so'ng qayta urinib ko'ring.");
+                btn.innerText = "Arizani yuborish";
+                btn.disabled = false;
+            });
+        });
     </script>
 </body>
 </html>
