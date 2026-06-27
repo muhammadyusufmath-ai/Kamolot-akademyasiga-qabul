@@ -71,10 +71,6 @@
         button:hover {
             background-color: #2980b9;
         }
-        button:disabled {
-            background-color: #95a5a6;
-            cursor: not-allowed;
-        }
     </style>
 </head>
 <body>
@@ -111,65 +107,59 @@
                 <input type="number" id="experience" name="experience" inputmode="numeric" pattern="[0-9]*" min="0" placeholder="Masalan: 2" required>
             </div>
 
-            <button type="submit" id="submitBtn">Arizani yuborish</button>
+            <button type="submit">Arizani yuborish</button>
         </form>
     </div>
 
     <script>
-        // Google Script manzilingiz
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzXyQNFpqlJT11ay9JvvjlANL70FhmMt7eufaE68MT_GG6A2d9jN4h8RaIA6C4OV66s/exec';
-        const form = document.getElementById('applicationForm');
-        const btn = document.getElementById('submitBtn');
-
-        form.addEventListener('submit', function(event) {
-            event.preventDefault(); 
-            
-            // Tugmani holatini o'zgartirish (Yuborilmoqda...)
-            btn.innerText = "Yuborilmoqda...";
-            btn.disabled = true;
+        document.getElementById('applicationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Sahifa yangilanib ketishining oldini olamiz
 
             // 1. Tug'ilgan sanani tartibga keltirish (Kun.Oy.Yil)
             let dobInput = document.getElementById('dob').value;
             let formattedDob = "";
             if (dobInput) {
-                let dateParts = dobInput.split('-'); 
-                formattedDob = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`; 
+                let dateParts = dobInput.split('-'); // Odatda YYYY-MM-DD shaklida bo'ladi
+                formattedDob = `${dateParts[2]}.${dateParts[1]}.${dateParts[0]}`; // DD.MM.YYYY ga o'zgartiramiz
             }
 
-            // 2. Telefon raqami formulasini oldini olish (Apostrof)
+            // 2. Telefon raqamini Google Sheets formula deb o'ylamasligi uchun to'g'irlash
             let phoneInput = document.getElementById('phone').value;
-            let safePhone = "'" + phoneInput; 
+            let safePhone = "'" + phoneInput; // Boshiga apostrof qo'shamiz
 
-            // 3. Ma'lumotlarni obyektga yig'ish
+            // 3. Qolgan ma'lumotlarni yig'ish
+            let fullName = document.getElementById('fullName').value;
+            let address = document.getElementById('address').value;
+            let experience = document.getElementById('experience').value;
+
+            // Yuboriladigan ma'lumotlar obyekti
             let formData = {
-                fish: document.getElementById('fullName').value,
+                fish: fullName,
                 tugilgan_sana: formattedDob,
                 telefon: safePhone,
-                manzil: document.getElementById('address').value,
-                tajriba: document.getElementById('experience').value
+                manzil: address,
+                tajriba: experience
             };
 
-            // 4. Ma'lumotlarni Google Sheets'ga yuborish
-            fetch(scriptURL, {
-                method: 'POST',
-                // Google Sheets JSON formatni to'g'ri qabul qilishi uchun:
-                headers: {
-                    'Content-Type': 'text/plain;charset=utf-8',
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => {
-                alert("Arizangiz muvaffaqiyatli yuborildi. Kamolot akademiyasi oilasiga xush kelibsiz!");
-                form.reset(); // Formani tozalash
-                btn.innerText = "Arizani yuborish"; // Tugmani asliga qaytarish
-                btn.disabled = false;
-            })
-            .catch(error => {
-                console.error('Xatolik:', error);
-                alert("Tarmoqda xatolik yuz berdi. Iltimos, birozdan so'ng qayta urinib ko'ring.");
-                btn.innerText = "Arizani yuborish";
-                btn.disabled = false;
-            });
+            console.log("Yuborishga tayyor ma'lumotlar:", formData);
+
+            /* DIQQAT: Ushbu joyda Google Apps Script linkiga so'rov yuborish kodi yoziladi.
+              Masalan, fetch() orqali. 
+              
+              fetch('SIZNING_GOOGLE_SCRIPT_LINKINGIZ', {
+                  method: 'POST',
+                  body: JSON.stringify(formData)
+              }).then(response => {
+                  alert("Arizangiz muvaffaqiyatli yuborildi. Oilamizga xush kelibsiz!");
+                  document.getElementById('applicationForm').reset();
+              }).catch(error => {
+                  alert("Xatolik yuz berdi. Iltimos qayta urinib ko'ring.");
+              });
+            */
+           
+           // Vaqtinchalik xabar (API ulangandan keyin olib tashlaysiz)
+           alert("Arizangiz muvaffaqiyatli shakllantirildi! (Konsolni tekshiring)");
+           this.reset(); // Formani tozalash
         });
     </script>
 </body>
