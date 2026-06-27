@@ -151,7 +151,7 @@
     <div class="container">
         <div class="header">
             <h1>KAMOLOT AKADEMIYASI</h1>
-            <p>Kamolot akademiyasi oilasiga qo'shilish uchun <br>qabul arizasini to'ldiring 🚀</p>
+            <p>Kamolot akademiyasi oilasiga qo'shilish uchun <br>qabul arizasini to'ldiring </p>
         </div>
 
         <form name="submit-to-google-sheet" method="POST">
@@ -273,14 +273,14 @@
           
           if(status === 'Bitirgan') {
               eduLabel.innerText = "Qayerni va qaysi yo'nalishni bitirgansiz?";
-              eduInput.placeholder = "Masalan: Farg'ona DU, Matematika yo'nalishi";
+              eduInput.placeholder = "Masalan: Farg'ona davlat unversiteti, Matematika yo'nalishi";
               
               courseGroup.style.display = 'none';
               courseInput.removeAttribute('required');
               courseInput.value = ''; 
           } else {
               eduLabel.innerText = "Qayerda va qaysi yo'nalishda o'qiyapsiz?";
-              eduInput.placeholder = "Masalan: Farg'ona DU, Matematika yo'nalishi";
+              eduInput.placeholder = "Masalan: Farg'ona davlat unversiteti, Matematika yo'nalishi";
               
               courseGroup.style.display = 'block';
               courseInput.setAttribute('required', 'required');
