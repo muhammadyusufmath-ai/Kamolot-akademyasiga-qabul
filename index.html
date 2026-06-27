@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kamolot Akademiyasi - Ishga qabul anketasi</title>
     <style>
+        :root {
+            --kamolot-blue: #12385A; /* Logodagi to'q ko'k rang */
+            --kamolot-green: #219E45; /* Logodagi yashil rang */
+            --bg-color: #f4f7f9;
+        }
         * {
             box-sizing: border-box;
             margin: 0;
@@ -12,7 +17,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background-color: #f0f4f8;
+            background-color: var(--bg-color);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -21,11 +26,19 @@
         }
         .container {
             background-color: #ffffff;
-            padding: 30px;
+            padding: 35px 30px;
             border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 25px rgba(18, 56, 90, 0.08);
             width: 100%;
             max-width: 550px;
+        }
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .logo-container img {
+            max-width: 220px;
+            height: auto;
         }
         .header {
             text-align: center;
@@ -34,7 +47,7 @@
             padding-bottom: 15px;
         }
         .header h1 {
-            color: #1e293b;
+            color: var(--kamolot-blue);
             font-size: 22px;
             margin-bottom: 5px;
         }
@@ -54,7 +67,7 @@
         .form-group label {
             display: block;
             margin-bottom: 6px;
-            color: #334155;
+            color: var(--kamolot-blue);
             font-weight: 600;
             font-size: 13px;
         }
@@ -73,9 +86,9 @@
             background-color: #f8fafc;
         }
         .form-group input:focus, .form-group select:focus {
-            border-color: #3b82f6;
+            border-color: var(--kamolot-green);
             background-color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 0 3px rgba(33, 158, 69, 0.15);
         }
         .form-group input:disabled {
             background-color: #e2e8f0;
@@ -93,10 +106,20 @@
             align-items: center;
             gap: 5px;
             cursor: pointer;
+            color: #334155;
+        }
+        /* Maxsus yashirin kurs qismi */
+        #course_group {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         .submit-btn {
             width: 100%;
-            background-color: #2563eb;
+            background-color: var(--kamolot-green);
             color: white;
             padding: 14px;
             border: none;
@@ -104,15 +127,17 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
             margin-top: 10px;
         }
         .submit-btn:hover {
-            background-color: #1d4ed8;
+            background-color: var(--kamolot-blue);
+            box-shadow: 0 4px 12px rgba(18, 56, 90, 0.2);
         }
         .submit-btn:disabled {
             background-color: #94a3b8;
             cursor: not-allowed;
+            box-shadow: none;
         }
         @media (max-width: 480px) {
             .form-row {
@@ -125,6 +150,11 @@
 <body>
 
     <div class="container">
+        <!-- Logo qismi -->
+        <div class="logo-container">
+            <img src="image.png" alt="Kamolot Akademiyasi">
+        </div>
+
         <div class="header">
             <h1>Anketa to'ldirish</h1>
             <p>"Kamolot akademiyasi" jamoasiga qo'shiling</p>
@@ -164,9 +194,10 @@
                 <input type="tel" id="phone2" name="phone2" inputmode="numeric" placeholder="+998">
             </div>
 
+            <!-- Manzil qismi o'zgartirildi -->
             <div class="form-group">
                 <label for="address">Yashash manzili</label>
-                <input type="text" id="address" name="address" placeholder="Viloyat, tuman, ko'cha, uy" required>
+                <input type="text" id="address" name="address" placeholder="Viloyat, tuman, MFY" required>
             </div>
 
             <div class="form-group">
@@ -177,9 +208,16 @@
                 </div>
             </div>
 
+            <!-- O'qish joyi savoli dinamik o'zgaradi -->
             <div class="form-group">
-                <label id="edu_label" for="education">O'qish joyi</label>
+                <label id="edu_label" for="education">O'qish yoki bitirgan joyingiz</label>
                 <input type="text" id="education" name="education" placeholder="Tepadagi ta'lim holatini tanlang" required disabled>
+            </div>
+
+            <!-- Faqat talaba bo'lsa chiqadigan KURS savoli -->
+            <div class="form-group" id="course_group">
+                <label for="course">Nechanchi kurssiz? (Magistratura bo'lsa ham yozing)</label>
+                <input type="text" id="course" name="course" placeholder="Masalan: 1, 2, 3, 4 yoki magistratura">
             </div>
 
             <div class="form-group">
@@ -214,20 +252,31 @@
     </div>
 
     <script>
-      // ❗️ MANA SHU QISM SIZ AYTGANDAK O'ZGARTIRILDI ❗️
+      // Mantiqiy o'zgarishlar qismi
       function updateEduLabel() {
           const status = document.querySelector('input[name="edu_status"]:checked').value;
           const eduInput = document.getElementById('education');
           const eduLabel = document.getElementById('edu_label');
+          const courseGroup = document.getElementById('course_group');
+          const courseInput = document.getElementById('course');
           
           eduInput.disabled = false;
           
           if(status === 'Bitirgan') {
-              eduLabel.innerText = "Qayerda va qaysi yo'nalishni bitirgansiz?";
+              eduLabel.innerText = "Qayerni va qaysi yo'nalishni bitirgansiz?";
               eduInput.placeholder = "Masalan: Farg'ona DU, Matematika yo'nalishi";
+              
+              // Kurs savolini yashirish va majburiylikni olib tashlash
+              courseGroup.style.display = 'none';
+              courseInput.removeAttribute('required');
+              courseInput.value = ''; 
           } else {
-              eduLabel.innerText = "Qayerda, qaysi yo'nalishda va nechanchi kursda o'qiysiz?";
-              eduInput.placeholder = "Masalan: Farg'ona DU, Matematika yo'nalishi, 3-kurs";
+              eduLabel.innerText = "Qayerda va qaysi yo'nalishda o'qiyapsiz?";
+              eduInput.placeholder = "Masalan: Farg'ona DU, Matematika yo'nalishi";
+              
+              // Kurs savolini ko'rsatish va majburiy qilish
+              courseGroup.style.display = 'block';
+              courseInput.setAttribute('required', 'required');
           }
       }
 
@@ -235,32 +284,25 @@
       function formatPhoneNumber(e) {
           let input = e.target;
           let val = input.value.replace(/\D/g, ''); 
-          
-          if (!val.startsWith('998')) {
-              val = '998' + val;
-          }
+          if (!val.startsWith('998')) val = '998' + val;
           val = val.substring(0, 12); 
-          
           let formatted = '+';
           if (val.length > 0) formatted += val.substring(0, 3);
           if (val.length > 3) formatted += ' ' + val.substring(3, 5);
           if (val.length > 5) formatted += ' ' + val.substring(5, 8);
           if (val.length > 8) formatted += ' ' + val.substring(8, 10);
           if (val.length > 10) formatted += ' ' + val.substring(10, 12);
-          
           input.value = formatted;
       }
 
       const phoneInput = document.getElementById('phone');
       const phone2Input = document.getElementById('phone2');
-      
       phoneInput.addEventListener('input', formatPhoneNumber);
       phone2Input.addEventListener('input', formatPhoneNumber);
-      
       phoneInput.addEventListener('focus', () => { if(phoneInput.value === '') phoneInput.value = '+998 '; });
       phone2Input.addEventListener('focus', () => { if(phone2Input.value === '') phone2Input.value = '+998 '; });
 
-      // Ma'lumotni Google Sheets'ga yuborish
+      // Ma'lumotni yuborish
       const scriptURL = 'https://script.google.com/macros/s/AKfycbzXyQNFpqlJT11ay9JvvjlANL70FhmMt7eufaE68MT_GG6A2d9jN4h8RaIA6C4OV66s/exec';
       const form = document.forms['submit-to-google-sheet'];
       const submitBtn = document.getElementById('submitBtn');
@@ -272,7 +314,6 @@
         submitBtn.disabled = true;
 
         let formData = new FormData(form);
-        
         let dobRaw = formData.get('dob');
         if(dobRaw) {
             let parts = dobRaw.split('-');
@@ -283,13 +324,12 @@
           .then(response => {
             alert("Sizning so'rovingiz muvaffaqiyatli qabul qilindi. Yaqin orada siz bilan bog'lanamiz! Tashakkur.");
             form.reset(); 
-            
             submitBtn.innerText = 'Anketani yuborish';
             submitBtn.disabled = false;
-            
             document.getElementById('education').disabled = true;
             document.getElementById('education').placeholder = "Tepadagi ta'lim holatini tanlang";
             document.getElementById('edu_label').innerText = "O'qish joyi";
+            document.getElementById('course_group').style.display = 'none';
           })
           .catch(error => {
             console.error('Xatolik!', error.message);
