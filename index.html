@@ -49,6 +49,7 @@
             color: #4a627a;
             font-size: 14px;
             font-weight: 500;
+            line-height: 1.4;
         }
         .form-row {
             display: flex;
@@ -150,7 +151,7 @@
     <div class="container">
         <div class="header">
             <h1>KAMOLOT AKADEMIYASI</h1>
-            <p>Ishga qabul arizasini to'ldiring</p>
+            <p>Kamolot akademiyasi oilasiga qo'shilish uchun <br>qabul arizasini to'ldiring 🚀</p>
         </div>
 
         <form name="submit-to-google-sheet" method="POST">
@@ -168,12 +169,13 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="dob">Tug'ilgan sana (kun, oy, yil bo'yicha)</label>
+                    <label for="dob">Tug'ilgan sana</label>
                     <input type="date" id="dob" name="dob" required>
                 </div>
                 <div class="form-group">
                     <label for="experience">Tajribangiz (yil)</label>
-                    <input type="number" id="experience" name="experience" placeholder="0" min="0" step="1" required>
+                    <!-- Telefonda ishlashi uchun inputmode va pattern qo'shildi -->
+                    <input type="number" id="experience" name="experience" inputmode="numeric" pattern="[0-9]*" placeholder="0" min="0" step="1" required>
                 </div>
             </div>
 
@@ -189,7 +191,8 @@
 
             <div class="form-group">
                 <label for="address">Yashash manzili</label>
-                <input type="text" id="address" name="address" placeholder="Viloyat, tuman, MFY" required>
+                <!-- MFY so'zi kichik harfga o'zgartirildi -->
+                <input type="text" id="address" name="address" placeholder="Viloyat, tuman, mfy" required>
             </div>
 
             <div class="form-group">
@@ -247,14 +250,12 @@
           const requiredElements = document.querySelectorAll('[required]');
           
           requiredElements.forEach(el => {
-              // Bo'sh qolganda chiqadigan xabar
               el.addEventListener('invalid', function(e) {
-                  e.preventDefault(); // Brauzerni o'ziniki chiqmasligi uchun
+                  e.preventDefault(); 
                   this.setCustomValidity("Ushbu qatorni to'ldirish majburiy. Iltimos, ma'lumotni kiriting!");
                   this.reportValidity();
               });
               
-              // Odam yoza boshlaganda xatoni tozalash
               el.addEventListener('input', function() {
                   this.setCustomValidity('');
               });
@@ -314,7 +315,6 @@
       form.addEventListener('submit', e => {
         e.preventDefault();
         
-        // Hamma required larni tekshirib o'tish
         if (!form.checkValidity()) {
             return;
         }
@@ -323,10 +323,23 @@
         submitBtn.disabled = true;
 
         let formData = new FormData(form);
+        
+        // Tug'ilgan sanani o'zgartirish
         let dobRaw = formData.get('dob');
         if(dobRaw) {
             let parts = dobRaw.split('-');
             formData.set('dob', `${parts[2]}.${parts[1]}.${parts[0]}`); 
+        }
+
+        // Google Sheets uchun telefon raqamlari oldiga apostrof qo'shish (Error ni oldini oladi)
+        let phoneRaw = formData.get('phone');
+        if(phoneRaw) {
+            formData.set('phone', "'" + phoneRaw);
+        }
+        
+        let phone2Raw = formData.get('phone2');
+        if(phone2Raw) {
+            formData.set('phone2', "'" + phone2Raw);
         }
         
         fetch(scriptURL, { method: 'POST', body: formData})
