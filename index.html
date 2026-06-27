@@ -8,7 +8,8 @@
         :root {
             --kamolot-blue: #12385A; /* Logodagi to'q ko'k rang */
             --kamolot-green: #219E45; /* Logodagi yashil rang */
-            --bg-color: #f4f7f9;
+            --bg-outer: #e8edf2; /* Ikkala yondagi ochiqroq fon (oppoq emas) */
+            --bg-inner: #d0dae5; /* Anketa turadigan to'qroq fon */
         }
         * {
             box-sizing: border-box;
@@ -17,7 +18,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         body {
-            background-color: var(--bg-color);
+            background-color: var(--bg-outer);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -25,35 +26,29 @@
             padding: 20px;
         }
         .container {
-            background-color: #ffffff;
+            background-color: var(--bg-inner);
             padding: 35px 30px;
             border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(18, 56, 90, 0.08);
+            box-shadow: 0 8px 25px rgba(18, 56, 90, 0.15);
             width: 100%;
             max-width: 550px;
-        }
-        .logo-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .logo-container img {
-            max-width: 220px;
-            height: auto;
         }
         .header {
             text-align: center;
             margin-bottom: 25px;
-            border-bottom: 2px solid #e5e7eb;
+            border-bottom: 2px solid #b8c8d8;
             padding-bottom: 15px;
         }
         .header h1 {
             color: var(--kamolot-blue);
-            font-size: 22px;
+            font-size: 24px;
             margin-bottom: 5px;
+            font-weight: 800;
         }
         .header p {
-            color: #64748b;
+            color: #4a627a;
             font-size: 14px;
+            font-weight: 500;
         }
         .form-row {
             display: flex;
@@ -68,7 +63,7 @@
             display: block;
             margin-bottom: 6px;
             color: var(--kamolot-blue);
-            font-weight: 600;
+            font-weight: 700;
             font-size: 13px;
         }
         .form-group input[type="text"], 
@@ -78,20 +73,22 @@
         .form-group select {
             width: 100%;
             padding: 10px 12px;
-            border: 1px solid #cbd5e1;
+            border: 1px solid #aebfd0;
             border-radius: 8px;
             font-size: 14px;
             outline: none;
             transition: border-color 0.3s, box-shadow 0.3s;
             background-color: #f8fafc;
+            color: #1e293b;
         }
         .form-group input:focus, .form-group select:focus {
             border-color: var(--kamolot-green);
             background-color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(33, 158, 69, 0.15);
+            box-shadow: 0 0 0 3px rgba(33, 158, 69, 0.2);
         }
         .form-group input:disabled {
-            background-color: #e2e8f0;
+            background-color: #cdd6df;
+            color: #64748b;
             cursor: not-allowed;
         }
         .radio-group {
@@ -100,15 +97,14 @@
             margin-top: 5px;
         }
         .radio-group label {
-            font-weight: normal;
+            font-weight: 600;
             font-size: 14px;
             display: flex;
             align-items: center;
             gap: 5px;
             cursor: pointer;
-            color: #334155;
+            color: var(--kamolot-blue);
         }
-        /* Maxsus yashirin kurs qismi */
         #course_group {
             display: none;
             animation: fadeIn 0.3s ease-in-out;
@@ -129,13 +125,15 @@
             cursor: pointer;
             transition: all 0.3s ease;
             margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .submit-btn:hover {
             background-color: var(--kamolot-blue);
-            box-shadow: 0 4px 12px rgba(18, 56, 90, 0.2);
+            box-shadow: 0 4px 12px rgba(18, 56, 90, 0.25);
         }
         .submit-btn:disabled {
-            background-color: #94a3b8;
+            background-color: #8fa0b3;
             cursor: not-allowed;
             box-shadow: none;
         }
@@ -150,14 +148,9 @@
 <body>
 
     <div class="container">
-        <!-- Logo qismi -->
-        <div class="logo-container">
-            <img src="image.png" alt="Kamolot Akademiyasi">
-        </div>
-
         <div class="header">
-            <h1>Anketa to'ldirish</h1>
-            <p>"Kamolot akademiyasi" jamoasiga qo'shiling</p>
+            <h1>KAMOLOT AKADEMIYASI</h1>
+            <p>Ishga qabul arizasini to'ldiring</p>
         </div>
 
         <form name="submit-to-google-sheet" method="POST">
@@ -175,7 +168,7 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="dob">Tug'ilgan sana (Kun/Oy/Yil)</label>
+                    <label for="dob">Tug'ilgan sana (kun, oy, yil bo'yicha)</label>
                     <input type="date" id="dob" name="dob" required>
                 </div>
                 <div class="form-group">
@@ -194,7 +187,6 @@
                 <input type="tel" id="phone2" name="phone2" inputmode="numeric" placeholder="+998">
             </div>
 
-            <!-- Manzil qismi o'zgartirildi -->
             <div class="form-group">
                 <label for="address">Yashash manzili</label>
                 <input type="text" id="address" name="address" placeholder="Viloyat, tuman, MFY" required>
@@ -208,13 +200,11 @@
                 </div>
             </div>
 
-            <!-- O'qish joyi savoli dinamik o'zgaradi -->
             <div class="form-group">
                 <label id="edu_label" for="education">O'qish yoki bitirgan joyingiz</label>
                 <input type="text" id="education" name="education" placeholder="Tepadagi ta'lim holatini tanlang" required disabled>
             </div>
 
-            <!-- Faqat talaba bo'lsa chiqadigan KURS savoli -->
             <div class="form-group" id="course_group">
                 <label for="course">Nechanchi kurssiz? (Magistratura bo'lsa ham yozing)</label>
                 <input type="text" id="course" name="course" placeholder="Masalan: 1, 2, 3, 4 yoki magistratura">
@@ -252,7 +242,25 @@
     </div>
 
     <script>
-      // Mantiqiy o'zgarishlar qismi
+      // ❗️ O'ZBEKCHA BILDIRISHNOMA (Validation) UCHUN KOD ❗️
+      document.addEventListener("DOMContentLoaded", function() {
+          const requiredElements = document.querySelectorAll('[required]');
+          
+          requiredElements.forEach(el => {
+              // Bo'sh qolganda chiqadigan xabar
+              el.addEventListener('invalid', function(e) {
+                  e.preventDefault(); // Brauzerni o'ziniki chiqmasligi uchun
+                  this.setCustomValidity("Ushbu qatorni to'ldirish majburiy. Iltimos, ma'lumotni kiriting!");
+                  this.reportValidity();
+              });
+              
+              // Odam yoza boshlaganda xatoni tozalash
+              el.addEventListener('input', function() {
+                  this.setCustomValidity('');
+              });
+          });
+      });
+
       function updateEduLabel() {
           const status = document.querySelector('input[name="edu_status"]:checked').value;
           const eduInput = document.getElementById('education');
@@ -266,7 +274,6 @@
               eduLabel.innerText = "Qayerni va qaysi yo'nalishni bitirgansiz?";
               eduInput.placeholder = "Masalan: Farg'ona DU, Matematika yo'nalishi";
               
-              // Kurs savolini yashirish va majburiylikni olib tashlash
               courseGroup.style.display = 'none';
               courseInput.removeAttribute('required');
               courseInput.value = ''; 
@@ -274,13 +281,11 @@
               eduLabel.innerText = "Qayerda va qaysi yo'nalishda o'qiyapsiz?";
               eduInput.placeholder = "Masalan: Farg'ona DU, Matematika yo'nalishi";
               
-              // Kurs savolini ko'rsatish va majburiy qilish
               courseGroup.style.display = 'block';
               courseInput.setAttribute('required', 'required');
           }
       }
 
-      // Telefon raqamni formatlash funksiyasi
       function formatPhoneNumber(e) {
           let input = e.target;
           let val = input.value.replace(/\D/g, ''); 
@@ -302,13 +307,17 @@
       phoneInput.addEventListener('focus', () => { if(phoneInput.value === '') phoneInput.value = '+998 '; });
       phone2Input.addEventListener('focus', () => { if(phone2Input.value === '') phone2Input.value = '+998 '; });
 
-      // Ma'lumotni yuborish
       const scriptURL = 'https://script.google.com/macros/s/AKfycbzXyQNFpqlJT11ay9JvvjlANL70FhmMt7eufaE68MT_GG6A2d9jN4h8RaIA6C4OV66s/exec';
       const form = document.forms['submit-to-google-sheet'];
       const submitBtn = document.getElementById('submitBtn');
 
       form.addEventListener('submit', e => {
         e.preventDefault();
+        
+        // Hamma required larni tekshirib o'tish
+        if (!form.checkValidity()) {
+            return;
+        }
         
         submitBtn.innerText = 'Yuborilmoqda... ⏳';
         submitBtn.disabled = true;
