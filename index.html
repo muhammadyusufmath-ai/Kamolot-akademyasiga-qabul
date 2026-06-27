@@ -73,28 +73,6 @@
             background-color: #ffffff;
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
-        .file-upload {
-            border: 2px dashed #94a3b8;
-            padding: 15px;
-            text-align: center;
-            border-radius: 8px;
-            background-color: #f1f5f9;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: block;
-        }
-        .file-upload:hover {
-            border-color: #3b82f6;
-            background-color: #eff6ff;
-        }
-        .file-upload input[type="file"] {
-            display: none;
-        }
-        .file-upload span {
-            color: #475569;
-            font-size: 13px;
-            font-weight: 500;
-        }
         .submit-btn {
             width: 100%;
             background-color: #2563eb;
@@ -111,13 +89,6 @@
         .submit-btn:hover {
             background-color: #1d4ed8;
         }
-        .optional-text {
-            color: #94a3b8;
-            font-size: 11px;
-            font-weight: normal;
-        }
-        
-        /* Telefon ekranlari uchun moslashuvchanlik */
         @media (max-width: 480px) {
             .form-row {
                 flex-direction: column;
@@ -134,7 +105,7 @@
             <p>"Kamolot Akademiya" jamoasiga qo'shiling</p>
         </div>
 
-        <form name="submit-to-google-sheet" method="POST" enctype="multipart/form-data">
+        <form name="submit-to-google-sheet" method="POST">
             
             <div class="form-group">
                 <label for="fullname">F.I.Sh</label>
@@ -152,34 +123,39 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="address">Yashash manzili</label>
-                <input type="text" id="address" name="address" placeholder="Tuman, ko'cha, uy" required>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone2">Qo'shimcha tel raqam</label>
+                    <input type="tel" id="phone2" name="phone2" placeholder="+998 90 123 45 67">
+                </div>
+                <div class="form-group">
+                    <label for="experience">Tajribangiz (yil)</label>
+                    <input type="number" id="experience" name="experience" placeholder="Masalan: 3" required>
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="education">Qayerni bitirgansiz?</label>
+                <label for="address">Yashash manzili</label>
+                <input type="text" id="address" name="address" placeholder="Viloyat, tuman, ko'cha, uy" required>
+            </div>
+
+            <div class="form-group">
+                <label for="education">Bitirgan yoki o'qigan joyi</label>
                 <input type="text" id="education" name="education" placeholder="Oliy ta'lim muassasasi nomi" required>
             </div>
 
             <div class="form-group">
-                <label for="subject">Qaysi fan o'qituvchisi?</label>
-                <select id="subject" name="subject" required>
-                    <option value="" disabled selected>Ro'yxatdan tanlang...</option>
-                    <option value="boshlangich">Boshlang'ich ta'lim (Rus sinf)</option>
-                    <option value="fizika">Fizika</option>
-                    <option value="tarix">Tarix (Rus sinf)</option>
-                    <option value="matematika">Matematika (Rus sinf)</option>
-                    <option value="boshqa">Boshqa fan</option>
+                <label for="cert_level">Sertifikat (mutaxassislik bo'yicha)</label>
+                <select id="cert_level" name="cert_level" required>
+                    <option value="" disabled selected>Darajani tanlang...</option>
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="C+">C+</option>
+                    <option value="C">C</option>
+                    <option value="Mavjud emas">Mavjud emas</option>
                 </select>
-            </div>
-
-            <div class="form-group">
-                <label>Sertifikat yuklash <span class="optional-text">(Ixtiyoriy)</span></label>
-                <label class="file-upload">
-                    <span>📷 Rasm yoki PDF fayl tanlang</span>
-                    <input type="file" name="certificate" accept="image/*,.pdf">
-                </label>
             </div>
 
             <button type="submit" class="submit-btn">Anketani yuborish</button>
