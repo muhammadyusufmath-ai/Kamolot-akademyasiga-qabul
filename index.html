@@ -25,7 +25,7 @@
             border-radius: 12px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
             width: 100%;
-            max-width: 500px;
+            max-width: 550px;
         }
         .header {
             text-align: center;
@@ -107,9 +107,15 @@
 
         <form name="submit-to-google-sheet" method="POST">
             
-            <div class="form-group">
-                <label for="fullname">F.I.Sh</label>
-                <input type="text" id="fullname" name="fullname" placeholder="To'liq ism-sharifingiz" required>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstname">Ism</label>
+                    <input type="text" id="firstname" name="firstname" placeholder="Ismingiz" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Familiya</label>
+                    <input type="text" id="lastname" name="lastname" placeholder="Familiyangiz" required>
+                </div>
             </div>
 
             <div class="form-row">
@@ -125,12 +131,12 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="phone2">Qo'shimcha tel raqam</label>
+                    <label for="phone2">Qo'shimcha telefon raqam</label>
                     <input type="tel" id="phone2" name="phone2" placeholder="+998 90 123 45 67">
                 </div>
                 <div class="form-group">
                     <label for="experience">Tajribangiz (yil)</label>
-                    <input type="number" id="experience" name="experience" placeholder="Masalan: 3" required>
+                    <input type="number" id="experience" name="experience" placeholder="0" min="0" step="1" required>
                 </div>
             </div>
 
@@ -140,12 +146,25 @@
             </div>
 
             <div class="form-group">
-                <label for="education">Bitirgan yoki o'qigan joyi</label>
-                <input type="text" id="education" name="education" placeholder="Oliy ta'lim muassasasi nomi" required>
+                <label for="education">Bitirgan yoki o'qiydigan joyi (Nechanchi kursligigacha yozing)</label>
+                <input type="text" id="education" name="education" placeholder="Masalan: Farg'ona DU, 3-kurs" required>
             </div>
 
             <div class="form-group">
-                <label for="cert_level">Sertifikat (mutaxassislik bo'yicha)</label>
+                <label for="subject">Qaysi fan o'qituvchisi?</label>
+                <select id="subject" name="subject" required>
+                    <option value="" disabled selected>Vakansiyani tanlang...</option>
+                    <option value="Boshlang'ich (Rus)">Boshlang'ich ta'lim (1-4 rus sinfi uchun)</option>
+                    <option value="Matematika (Rus)">Matematika (Rus sinfi uchun)</option>
+                    <option value="Tarix (Rus)">Tarix (Rus sinfi uchun)</option>
+                    <option value="Fizika">Fizika</option>
+                    <option value="Kimyo">Kimyo</option>
+                    <option value="Biologiya">Biologiya</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cert_level">Sertifikat darajasi</label>
                 <select id="cert_level" name="cert_level" required>
                     <option value="" disabled selected>Darajani tanlang...</option>
                     <option value="A+">A+</option>
